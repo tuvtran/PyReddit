@@ -1,9 +1,8 @@
-import wx
-from app.mainframe import MainFrame
+import os
+from app import create_app
+
+app = create_app(config_name=os.environ.get('APP_SETTINGS'))
 
 
 if __name__ == "__main__":
-
-    app = wx.App()
-    MainFrame(title="Reddit", parent=None, id=-1)
-    app.MainLoop()
+    app.run()
