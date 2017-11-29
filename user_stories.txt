@@ -1,0 +1,69 @@
+## Use cases
+- Launch from the browser
+- Subscribed to different subreddits
+- Can post a link
+- Can write a post
+- Can upvote/downvote
+- There are different subreddits
+- View reddit without having to sign up
+- Filter submissions by Hot/Controversial/Newest
+- Filter comments by Controversial/Newest
+- View user profile
+    + karma
+    + history of posts
+    + history of comments
+OPTIONAL
+- Searching
+- Create a new subreddit
+- Mark a thread as read later
+- To have divided view
+
+
+## Models
+
+- Subreddit
+    - name
+    - moderator
+    - subscribers
+    - threads
+    - description
+    - created on
+- Thread -> Post or Link
+    - title
+    - author
+    - upvote
+    - downvote
+    - score
+    - comment
+    - created on
+    - modified on
+- Comment
+    - comment
+    - created on
+    - modified on
+    - upvote
+    - downvote
+    - score
+- User
+    - posts
+    - comments
+    - name
+    - email
+    - password
+    - registered on
+    - moderator (later)
+
+
+## Classes
+
+(required Ajax)
+- UpvoteComment
+    - HTTP POST /api/<subreddit_name>/<post_id>/comments/<comment_id>/upvote
+- DownvoteComment
+    - HTTP POST /api/<subreddit_name>/<post_id>/comments/<comment_id>/downvote
+- UpvotePost
+    - HTTP POST /api/<subreddit_name>/<post_id>/upvote
+- DownvotePost
+    - HTTP POST /api/<subreddit_name>/<post_id>/upvote
+- Comment
+    - HTTP POST /api/<subreddit_name>/<post_id>/comments/new

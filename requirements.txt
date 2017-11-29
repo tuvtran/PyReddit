@@ -1,6 +1,16 @@
+alembic==0.9.6
 click==6.7
 Flask==0.12.2
+Flask-Migrate==2.1.1
+Flask-SQLAlchemy==2.3.2
+Flask-Testing==0.6.2
 itsdangerous==0.24
 Jinja2==2.10
+Mako==1.0.7
 MarkupSafe==1.0
+python-dateutil==2.6.1
+python-editor==1.0.3
+selenium==3.7.0
+six==1.11.0
+SQLAlchemy==1.1.15
 Werkzeug==0.12.2
