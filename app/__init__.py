@@ -9,8 +9,9 @@ def create_app(config_name):
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
 
-    @app.route('/')
-    def index():
-        return '<h1>Reddit Clone</h1>'
+    # import blueprints here
+    from app.views import views_bp
+
+    app.register_blueprint(views_bp)
 
     return app
