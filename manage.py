@@ -2,11 +2,15 @@ import os
 import unittest
 
 from flask_script import Manager
-from app import create_app
+from flask_migrate import Migrate, MigrateCommand
+from app import create_app, db
 
 
 app = create_app(config_name=os.environ.get('APP_SETTINGS'))
 manager = Manager(app)
+migrate = Migrate(app, db)
+
+manager.add_command('db', MigrateCommand)
 
 # check if the environment configuration is production
 is_prod = (os.environ.get('APP_SETTINGS') == 'production')
