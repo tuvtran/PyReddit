@@ -18,6 +18,9 @@ def create_app(config_name):
     # import blueprints here
     from app.views import views_bp
 
+    # import models
+    from app import models      # noqa
+
     app.register_blueprint(views_bp)
 
     return app
