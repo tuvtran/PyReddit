@@ -1,5 +1,5 @@
 from flask_testing import TestCase
-from app import create_app
+from app import create_app, db
 
 
 class BaseUnitTest(TestCase):
@@ -8,7 +8,9 @@ class BaseUnitTest(TestCase):
         return create_app(config_name='testing')
 
     def setUp(self):
-        pass
+        db.create_all()
+        db.session.commit()
 
     def tearDown(self):
-        pass
+        db.session.remove()
+        db.drop_all()

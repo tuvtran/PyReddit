@@ -107,4 +107,4 @@ venv.bak/
 .vscode/
 
 # sqlite stuff
-.db
+*.db
