@@ -4,6 +4,7 @@ import unittest
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from app import create_app, db
+from app.models.subreddit import Subreddit
 
 
 app = create_app(config_name=os.environ.get('APP_SETTINGS'))
@@ -14,6 +15,37 @@ manager.add_command('db', MigrateCommand)
 
 # check if the environment configuration is production
 is_prod = (os.environ.get('APP_SETTINGS') == 'production')
+
+
+@manager.command
+def createdb():
+    """Creates the db tables"""
+    db.create_all()
+    db.session.commit()
+
+
+@manager.command
+def dropdb():
+    """Drop all db tables"""
+    db.drop_all()
+
+
+@manager.command
+def resetdb():
+    """Reset all db tables"""
+    db.drop_all()
+    db.create_all()
+    db.session.commit()
+
+
+@manager.command
+def populate():
+    """Populate some data"""
+
+    # creating some subreddits
+    Subreddit(name='learnprogramming', description='Learn programming').save()
+    Subreddit(name='anime', description='Place to discuss anime').save()
+    Subreddit(name='programming', description='Programming in general').save()
 
 
 @manager.command
