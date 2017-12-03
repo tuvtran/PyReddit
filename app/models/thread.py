@@ -14,6 +14,11 @@ class Thread(db.Model):
         return db.Column(db.Integer, db.ForeignKey('users.id'))
 
     @declared_attr
+    def subreddit_id(cls):
+        """Foreign key to Subreddit table"""
+        return db.Column(db.Integer, db.ForeignKey('subreddits.id'))
+
+    @declared_attr
     def get_score(cls):
         """Get score of a thread"""
         return cls.upvote - cls.downvote
