@@ -10,7 +10,7 @@ class User(db.Model):
     email = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     registered_on = db.Column(
-        db.Datetime, nullable=False, default=db.func.current_timestamp()
+        db.DateTime, nullable=False, default=db.func.current_timestamp()
     )
 
     def __repr__(self):

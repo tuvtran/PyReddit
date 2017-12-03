@@ -108,3 +108,6 @@ venv.bak/
 
 # sqlite stuff
 *.db
+
+# TODO
+TODO
