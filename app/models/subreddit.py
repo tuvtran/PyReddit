@@ -7,7 +7,7 @@ class Subreddit(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False, unique=True)
     subscriber = db.Column(db.Integer, default=0)
-    description = db.Column(db.Text(10000))
+    description = db.Column(db.Text(10000), unique=False)
     created_on = db.Column(
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )

@@ -30,4 +30,4 @@ class SubredditModelTest(BaseUnitTest):
         )
         new_subreddit.save()
 
-        self.assertEqual(Subreddit.query.count(), 1)
+        self.assertEqual(Subreddit.query.count(), 4)
