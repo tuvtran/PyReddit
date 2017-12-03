@@ -2,4 +2,9 @@
 
 {% block content %}
   <h1>This is the list of all subreddits</h1>
+
+  {% for subreddit in subreddit_list %}
+    <b>{{ subreddit.name }}</b> -- <i>Created on: {{ subreddit.created_on }}</i>
+    <p>{{ subreddit.description }}</p>
+  {% endfor %}
 {% endblock %}

@@ -13,8 +13,8 @@ class Subreddit(db.Model):
     )
 
     def __repr__(self):
-        return f"""<Subreddit: {self.name} |
-            Description: {self.description[:50]}>"""
+        return f"<Subreddit: {self.name} | " + \
+            f"Description: {self.description[:50]}>"
 
     def save(self):
         db.session.add(self)

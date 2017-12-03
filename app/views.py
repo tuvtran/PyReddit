@@ -1,5 +1,8 @@
 from flask import Blueprint, render_template
 
+# import database models here
+from app.models.subreddit import Subreddit
+
 
 views_bp = Blueprint('views', __name__)
 
@@ -14,4 +17,5 @@ def subreddits():
     """
     List all subreddits
     """
-    return render_template('subreddits.html')
+    bindings = {'subreddit_list': Subreddit.query.all()}
+    return render_template('subreddits.html', **bindings)
