@@ -34,10 +34,36 @@ class Thread(db.Model):
     )
 
     @abc.abstractclassmethod
-    def link_or_text(cls):
+    def is_link(cls):
         """Return 0 for link, 1 for text"""
         ...
 
     def save(self):
         db.session.add(self)
         db.session.commit()
+
+
+class Text(Thread):
+
+    __tablename__ = 'texts'
+    text = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return f'<Text: {self.title}>'
+
+    @classmethod
+    def is_link(cls):
+        return False
+
+
+class Link(Thread):
+
+    __tablename__ = 'links'
+    link = db.Column(db.String(255), nullable=False)
+
+    def __repr__(self):
+        return f'<Link: {self.title}>'
+
+    @classmethod
+    def is_link(cls):
+        return True

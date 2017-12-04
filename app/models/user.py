@@ -13,6 +13,9 @@ class User(db.Model):
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )
 
+    texts = db.relationship('Text', backref='user', lazy='dynamic')
+    links = db.relationship('Link', backref='user', lazy='dynamic')
+
     def __repr__(self):
         return f'<User: {self.name}>'
 
