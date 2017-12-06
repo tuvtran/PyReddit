@@ -56,7 +56,7 @@ class ThreadModelTest(BaseUnitTest):
 
     def test_user_can_upvote_a_link(self):
         Link(
-            title='Test text',
+            title='Test link',
             link='http://google.com',
             user_id=2,
             subreddit_id=1
@@ -83,3 +83,29 @@ class ThreadModelTest(BaseUnitTest):
 
         self.assertEqual(user.has_upvoted.count(), 1)
         self.assertEqual(text.upvoters.count(), 1)
+
+    def test_create_text_upvoted_by_default(self):
+        Text(
+            title='Test text',
+            text='This is a content',
+            user_id=2,
+            subreddit_id=1
+        ).save()
+        user = User.query.get(2)
+        text = Text.query.first()
+
+        self.assertEqual(user.has_upvoted.count(), 1)
+        self.assertEqual(text.upvoters.count(), 1)
+
+    def test_create_link_upvoted_by_default(self):
+        Link(
+            title='Test link',
+            link='http://google.com',
+            user_id=2,
+            subreddit_id=1
+        ).save()
+        user = User.query.get(2)
+        link = Link.query.first()
+
+        self.assertEqual(user.has_upvoted.count(), 1)
+        self.assertEqual(link.upvoters.count(), 1)
