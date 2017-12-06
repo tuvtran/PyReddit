@@ -36,7 +36,7 @@ $ python manage.py test --type unit
 $ python manage.py runserver
 ```
 
-The application can now be accessed at 
+The application can now be accessed at `http://localhost:5000`
 
 ### Access the shell
 
