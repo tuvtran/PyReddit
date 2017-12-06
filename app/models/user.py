@@ -16,6 +16,8 @@ class User(db.Model):
     texts = db.relationship('Text', backref='user', lazy='dynamic')
     links = db.relationship('Link', backref='user', lazy='dynamic')
 
+    has_upvoted = db.relationship('ThreadUpvote', backref='user', lazy='dynamic')
+
     def __repr__(self):
         return f'<User: {self.name}>'
 

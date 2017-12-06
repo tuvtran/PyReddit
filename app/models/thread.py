@@ -43,10 +43,24 @@ class Thread(db.Model):
         db.session.commit()
 
 
+class ThreadUpvote(db.Model):
+
+    __tablename__ = 'thread_upvotes'
+    id = db.Column(db.Integer, primary_key=True)
+    link_id = db.Column(db.Integer, db.ForeignKey('links.id'), nullable=True)
+    text_id = db.Column(db.Integer, db.ForeignKey('texts.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+
 class Text(Thread):
 
     __tablename__ = 'texts'
     text = db.Column(db.Text, nullable=False)
+    upvoters = db.relationship('ThreadUpvote', backref='text', lazy='dynamic')
 
     def __repr__(self):
         return f'<Text: {self.title}>'
@@ -60,6 +74,7 @@ class Link(Thread):
 
     __tablename__ = 'links'
     link = db.Column(db.String(255), nullable=False)
+    upvoters = db.relationship('ThreadUpvote', backref='link', lazy='dynamic')
 
     def __repr__(self):
         return f'<Link: {self.title}>'

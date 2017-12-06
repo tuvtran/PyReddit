@@ -20,11 +20,18 @@ class BaseUnitTest(TestCase):
 
     def _create_test_user(self):
         User(
-            name='tester',
-            email='tester@test.com',
+            name='tester1',
+            email='tester1@test.com',
             password='testing'
         ).save()
-        return User.query.first()
+
+        User(
+            name='tester1',
+            email='tester1@test.com',
+            password='testing'
+        ).save()
+
+        return User.query.all()
 
     def _create_test_subreddits(self):
         Subreddit(name='test1', description='For testing 1').save()
