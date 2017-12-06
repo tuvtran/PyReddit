@@ -67,7 +67,9 @@ class ThreadModelTest(BaseUnitTest):
         ThreadUpvote(user_id=user.id, link_id=link.id).save()
 
         self.assertEqual(user.has_upvoted.count(), 1)
-        self.assertEqual(link.upvoters.count(), 1)
+
+        # we have to count the original poster
+        self.assertEqual(link.upvoters.count(), 2)
 
     def test_user_can_upvote_a_text(self):
         Text(
@@ -82,16 +84,18 @@ class ThreadModelTest(BaseUnitTest):
         ThreadUpvote(user_id=user.id, text_id=text.id).save()
 
         self.assertEqual(user.has_upvoted.count(), 1)
-        self.assertEqual(text.upvoters.count(), 1)
+
+        # we have to count the original poster
+        self.assertEqual(text.upvoters.count(), 2)
 
     def test_create_text_upvoted_by_default(self):
         Text(
             title='Test text',
             text='This is a content',
-            user_id=2,
+            user_id=1,
             subreddit_id=1
         ).save()
-        user = User.query.get(2)
+        user = User.query.get(1)
         text = Text.query.first()
 
         self.assertEqual(user.has_upvoted.count(), 1)
@@ -101,10 +105,10 @@ class ThreadModelTest(BaseUnitTest):
         Link(
             title='Test link',
             link='http://google.com',
-            user_id=2,
+            user_id=1,
             subreddit_id=1
         ).save()
-        user = User.query.get(2)
+        user = User.query.get(1)
         link = Link.query.first()
 
         self.assertEqual(user.has_upvoted.count(), 1)

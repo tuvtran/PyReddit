@@ -69,6 +69,10 @@ class Text(Thread):
     def is_link(cls):
         return False
 
+    def save(self):
+        super().save()
+        ThreadUpvote(user_id=self.user_id, text_id=self.id).save()
+
 
 class Link(Thread):
 
@@ -82,3 +86,7 @@ class Link(Thread):
     @classmethod
     def is_link(cls):
         return True
+
+    def save(self):
+        super().save()
+        ThreadUpvote(user_id=self.user_id, link_id=self.id).save()
