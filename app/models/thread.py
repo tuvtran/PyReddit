@@ -56,6 +56,19 @@ class ThreadUpvote(db.Model):
         db.session.commit()
 
 
+class ThreadDownvote(db.Model):
+
+    __tablename__ = 'thread_downvotes'
+    id = db.Column(db.Integer, primary_key=True)
+    link_id = db.Column(db.Integer, db.ForeignKey('links.id'), nullable=True)
+    text_id = db.Column(db.Integer, db.ForeignKey('texts.id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+
 class Text(Thread):
 
     __tablename__ = 'texts'
