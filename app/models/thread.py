@@ -80,7 +80,7 @@ class Text(Thread):
         return f'<Text: {self.title}>'
 
     @classmethod
-    def is_link(cls):
+    def is_link(self):
         return False
 
     def save(self):
@@ -99,7 +99,7 @@ class Link(Thread):
         return f'<Link: {self.title}>'
 
     @classmethod
-    def is_link(cls):
+    def is_link(self):
         return True
 
     def save(self):
