@@ -1,5 +1,5 @@
 from tests.unit.base import BaseUnitTest
-from app.models.thread import Link, Text, ThreadUpvote
+from app.models.thread import Link, Text, ThreadUpvote, ThreadDownvote
 from app.models.subreddit import Subreddit
 from app.models.user import User
 
@@ -124,10 +124,10 @@ class ThreadModelTest(BaseUnitTest):
         user = User.query.first()
         link = Link.query.first()
 
-        ThreadUpvote(user_id=user.id, link_id=link.id).save()
+        ThreadDownvote(user_id=user.id, link_id=link.id).save()
 
         self.assertEqual(user.has_downvoted.count(), 1)
-        self.assertEqual(link.downvoters.count(), 2)
+        self.assertEqual(link.downvoters.count(), 1)
 
     def test_user_can_downvote_a_text(self):
         Text(
@@ -139,7 +139,7 @@ class ThreadModelTest(BaseUnitTest):
         user = User.query.first()
         text = Text.query.first()
 
-        ThreadUpvote(user_id=user.id, text_id=text.id).save()
+        ThreadDownvote(user_id=user.id, text_id=text.id).save()
 
         self.assertEqual(user.has_downvoted.count(), 1)
         self.assertEqual(text.downvoters.count(), 1)
