@@ -17,6 +17,7 @@ class CommentModelTest(BaseUnitTest):
         link = Link.query.first()
         ParentComment(
             content="This is a test comment",
+            user_id=1,
             link_id=link.id
         ).save()
         self.assertEqual(link.comments.count(), 1)
@@ -31,6 +32,7 @@ class CommentModelTest(BaseUnitTest):
         text = Text.query.first()
         ParentComment(
             content="This is a test comment",
+            user_id=1,
             text_id=text.id
         ).save()
         self.assertEqual(text.comments.count(), 1)
@@ -42,5 +44,10 @@ class CommentModelTest(BaseUnitTest):
             user_id=1,
             subreddit_id=1
         ).save()
+        ParentComment(
+            content="This is a test comment",
+            user_id=1,
+            text_id=1
+        ).save()
         user = User.query.get(1)
-
+        self.assertEqual(user.thread_comments.count(), 1)

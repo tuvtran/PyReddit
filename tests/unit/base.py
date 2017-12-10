@@ -26,8 +26,8 @@ class BaseUnitTest(TestCase):
         ).save()
 
         User(
-            name='tester1',
-            email='tester1@test.com',
+            name='tester2',
+            email='tester2@test.com',
             password='testing'
         ).save()
 

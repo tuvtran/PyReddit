@@ -6,7 +6,7 @@ class User(db.Model):
 
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(255), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     registered_on = db.Column(
@@ -15,6 +15,9 @@ class User(db.Model):
 
     texts = db.relationship('Text', backref='user', lazy='dynamic')
     links = db.relationship('Link', backref='user', lazy='dynamic')
+
+    thread_comments = db.relationship('ParentComment', backref='user', lazy='dynamic')
+    child_comments = db.relationship('ChildComment', backref='user', lazy='dynamic')
 
     has_upvoted = db.relationship('ThreadUpvote', backref='user', lazy='dynamic')
     has_downvoted = db.relationship('ThreadDownvote', backref='user', lazy='dynamic')
