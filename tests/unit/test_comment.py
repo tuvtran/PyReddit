@@ -1,7 +1,6 @@
 from tests.unit.base import BaseUnitTest
-from app.models.thread import Link, Text, ThreadUpvote, ThreadDownvote
+from app.models.thread import Link, Text
 from app.models.comment import Comment, CommentDownvote, CommentUpvote
-from app.models.subreddit import Subreddit
 from app.models.user import User
 
 

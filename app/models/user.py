@@ -18,6 +18,9 @@ class User(db.Model):
 
     comments = db.relationship('Comment', backref='user', lazy='dynamic')
 
+    post_karma = db.Column(db.Integer, nullable=False, default=0)
+    comment_karma = db.Column(db.Integer, nullable=False, default=0)
+
     has_upvoted = db.relationship('ThreadUpvote', backref='user', lazy='dynamic')
     has_downvoted = db.relationship('ThreadDownvote', backref='user', lazy='dynamic')
 

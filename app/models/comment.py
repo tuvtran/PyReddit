@@ -1,4 +1,5 @@
 from app import db
+from app.models.user import User
 
 
 class Comment(db.Model):
@@ -49,6 +50,12 @@ class CommentUpvote(db.Model):
 
     def save(self):
         db.session.add(self)
+
+        # retrieve user to update karma
+        comment = Comment.query.get(self.comment_id)
+        user = User.query.get(comment.user_id)
+        user.comment_karma += 1
+
         db.session.commit()
 
 
@@ -61,4 +68,10 @@ class CommentDownvote(db.Model):
 
     def save(self):
         db.session.add(self)
+
+        # retrieve user to update karma
+        comment = Comment.query.get(self.comment_id)
+        user = User.query.get(comment.user_id)
+        user.comment_karma -= 1
+
         db.session.commit()

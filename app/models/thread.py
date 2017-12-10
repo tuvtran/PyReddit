@@ -1,5 +1,6 @@
 import abc
 from app import db
+from app.models.user import User
 from sqlalchemy.ext.declarative import declared_attr
 
 
@@ -53,6 +54,17 @@ class ThreadUpvote(db.Model):
 
     def save(self):
         db.session.add(self)
+
+        # retrieve user to update karma
+        if self.link_id:
+            link = Link.query.get(self.link_id)
+            _id = link.user_id
+        else:
+            text = Text.query.get(self.text_id)
+            _id = text.user_id
+        user = User.query.get(_id)
+        user.post_karma += 1
+
         db.session.commit()
 
 
@@ -66,6 +78,17 @@ class ThreadDownvote(db.Model):
 
     def save(self):
         db.session.add(self)
+
+        # retrieve user to update karma
+        if self.link_id:
+            link = Link.query.get(self.link_id)
+            _id = link.user_id
+        else:
+            text = Text.query.get(self.text_id)
+            _id = text.user_id
+        user = User.query.get(_id)
+        user.post_karma -= 1
+
         db.session.commit()
 
 
