@@ -1,6 +1,6 @@
 from tests.unit.base import BaseUnitTest
 from app.models.thread import Link, Text, ThreadUpvote, ThreadDownvote
-from app.models.comment import Comment
+from app.models.comment import Comment, CommentDownvote, CommentUpvote
 from app.models.subreddit import Subreddit
 from app.models.user import User
 
@@ -93,3 +93,44 @@ class CommentModelTest(BaseUnitTest):
         self.assertEqual(c2.children.count(), 1)
         self.assertEqual(c3.comment_id, c2.id)
         self.assertEqual(c2.comment_id, c1.id)
+
+    def test_user_can_upvote_a_comment(self):
+        c1 = Comment(
+            content="This is a test comment",
+            user_id=2,
+            text_id=1
+        )
+        c1.save()
+        user = User.query.get(1)
+
+        CommentUpvote(user_id=1, comment_id=c1.id).save()
+
+        self.assertEqual(user.has_upvoted_comment.count(), 1)
+
+        # we have to count the original commenter
+        self.assertEqual(c1.upvoters.count(), 2)
+
+    def test_user_can_downvote_a_comment(self):
+        c1 = Comment(
+            content="This is a test comment",
+            user_id=2,
+            text_id=1
+        )
+        c1.save()
+        user = User.query.get(1)
+
+        CommentDownvote(user_id=1, comment_id=c1.id).save()
+
+        self.assertEqual(user.has_downvoted_comment.count(), 1)
+        self.assertEqual(c1.downvoters.count(), 1)
+
+    def test_create_comment_upvoted_by_default(self):
+        c1 = Comment(
+            content="This is a test comment",
+            user_id=1,
+            text_id=1
+        )
+        c1.save()
+
+        self.assertEqual(User.query.get(1).has_upvoted_comment.count(), 1)
+        self.assertEqual(c1.upvoters.count(), 1)

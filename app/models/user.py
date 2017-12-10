@@ -21,6 +21,13 @@ class User(db.Model):
     has_upvoted = db.relationship('ThreadUpvote', backref='user', lazy='dynamic')
     has_downvoted = db.relationship('ThreadDownvote', backref='user', lazy='dynamic')
 
+    has_upvoted_comment = db.relationship(
+        'CommentUpvote', backref='user', lazy='dynamic'
+    )
+    has_downvoted_comment = db.relationship(
+        'CommentDownvote', backref='user', lazy='dynamic'
+    )
+
     def __repr__(self):
         return f'<User: {self.name}>'
 
