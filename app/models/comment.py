@@ -11,7 +11,7 @@ class BaseComment(db.Model):
     @declared_attr
     def user_id(cls):
         """Foreign key to User table"""
-        return db.Column(db.Integer, db.ForeignKey('users.id'))
+        return db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     @declared_attr
     def get_score(cls):

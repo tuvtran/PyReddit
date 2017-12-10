@@ -34,3 +34,13 @@ class CommentModelTest(BaseUnitTest):
             text_id=text.id
         ).save()
         self.assertEqual(text.comments.count(), 1)
+
+    def test_user_has_comment(self):
+        Text(
+            title='Test text',
+            text='This is a content',
+            user_id=1,
+            subreddit_id=1
+        ).save()
+        user = User.query.get(1)
+
