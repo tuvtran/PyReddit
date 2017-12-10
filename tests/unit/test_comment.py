@@ -1,6 +1,6 @@
 from tests.unit.base import BaseUnitTest
 from app.models.thread import Link, Text, ThreadUpvote, ThreadDownvote
-from app.models.comment import ParentComment
+from app.models.comment import ParentComment, ChildComment
 from app.models.subreddit import Subreddit
 from app.models.user import User
 
@@ -51,3 +51,18 @@ class CommentModelTest(BaseUnitTest):
         ).save()
         user = User.query.get(1)
         self.assertEqual(user.thread_comments.count(), 1)
+
+    def test_user_has_comment_to_a_comment(self):
+        ParentComment(
+            content="This is a test comment",
+            user_id=2,
+            text_id=1
+        ).save()
+        pcomment = ParentComment.query.first()
+        ChildComment(
+            content='This is a child comment',
+            user_id=1,
+            comment_id=pcomment.id
+        ).save()
+        user = User.query.get(1)
+        self.assertEqual(user.child_comments.count(), 1)
