@@ -12,8 +12,8 @@ class Subreddit(db.Model):
         db.DateTime, nullable=False, default=db.func.current_timestamp()
     )
 
-    links = db.relationship('Link', backref='subreddit', lazy='dynamic')
     texts = db.relationship('Text', backref='subreddit', lazy='dynamic')
+    links = db.relationship('Link', backref='subreddit', lazy='dynamic')
 
     def __repr__(self):
         return f"<Subreddit: {self.name} | " + \

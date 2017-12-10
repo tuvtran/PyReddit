@@ -9,7 +9,8 @@ views_bp = Blueprint('views', __name__)
 
 @views_bp.route('/')
 def homepage():
-    return render_template('index.html')
+    bindings = {'subreddit_list': Subreddit.query.all()}
+    return render_template('index.html', **bindings)
 
 
 @views_bp.route('/subreddits')
