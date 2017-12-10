@@ -3,22 +3,12 @@ from app import db
 from sqlalchemy.ext.declarative import declared_attr
 
 
-class BaseComment(db.Model):
+class Comment(db.Model):
 
-    __abstract__ = True
-    __metaclass__ = abc.ABCMeta
-
-    @declared_attr
-    def user_id(cls):
-        """Foreign key to User table"""
-        return db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-
-    @declared_attr
-    def get_score(cls):
-        """Get score of a comment"""
-        return cls.upvote - cls.downvote
+    __tablename__ = 'comments'
 
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     content = db.Column(db.Text, nullable=False)
     upvote = db.Column(db.Integer, nullable=False, default=0)
     downvote = db.Column(db.Integer, nullable=False, default=0)
@@ -28,29 +18,22 @@ class BaseComment(db.Model):
         onupdate=db.func.current_timestamp()
     )
 
+    link_id = db.Column(db.Integer, db.ForeignKey('links.id'), nullable=True)
+    text_id = db.Column(db.Integer, db.ForeignKey('texts.id'), nullable=True)
+    comment_id = db.Column(db.Integer, db.ForeignKey('comments.id'), nullable=True)
+
+    children = db.relationship(
+        'Comment', backref=db.backref('parent', remote_side=[id]),
+        lazy='dynamic'
+    )
+
+    def __repr__(self):
+        return f"{self.content} | {self.id}"
+
+    def get_score(self):
+        """Get score of a comment"""
+        return self.upvote - self.downvote
+
     def save(self):
         db.session.add(self)
         db.session.commit()
-
-
-class ParentComment(BaseComment):
-    """
-        Comment to a Thread
-    """
-
-    __tablename__ = 'parent_comments'
-    link_id = db.Column(db.Integer, db.ForeignKey('links.id'), nullable=True)
-    text_id = db.Column(db.Integer, db.ForeignKey('texts.id'), nullable=True)
-
-    @classmethod
-    def is_link(self):
-        return self.text_id is None
-
-
-class ChildComment(BaseComment):
-    """
-        Comment to a Comment
-    """
-
-    __tablename__ = 'child_comments'
-    comment_id = db.Column(db.Integer, db.ForeignKey('parent_comments.id'))

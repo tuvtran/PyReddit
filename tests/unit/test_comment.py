@@ -1,6 +1,6 @@
 from tests.unit.base import BaseUnitTest
 from app.models.thread import Link, Text, ThreadUpvote, ThreadDownvote
-from app.models.comment import ParentComment, ChildComment
+from app.models.comment import Comment
 from app.models.subreddit import Subreddit
 from app.models.user import User
 
@@ -15,7 +15,7 @@ class CommentModelTest(BaseUnitTest):
             subreddit_id=1
         ).save()
         link = Link.query.first()
-        ParentComment(
+        Comment(
             content="This is a test comment",
             user_id=1,
             link_id=link.id
@@ -30,7 +30,7 @@ class CommentModelTest(BaseUnitTest):
             subreddit_id=1
         ).save()
         text = Text.query.first()
-        ParentComment(
+        Comment(
             content="This is a test comment",
             user_id=1,
             text_id=text.id
@@ -44,25 +44,52 @@ class CommentModelTest(BaseUnitTest):
             user_id=1,
             subreddit_id=1
         ).save()
-        ParentComment(
+        Comment(
             content="This is a test comment",
             user_id=1,
             text_id=1
         ).save()
         user = User.query.get(1)
-        self.assertEqual(user.thread_comments.count(), 1)
+        self.assertEqual(user.comments.count(), 1)
 
     def test_user_has_comment_to_a_comment(self):
-        ParentComment(
+        Comment(
             content="This is a test comment",
             user_id=2,
             text_id=1
         ).save()
-        pcomment = ParentComment.query.first()
-        ChildComment(
+        pcomment = Comment.query.first()
+        Comment(
             content='This is a child comment',
             user_id=1,
             comment_id=pcomment.id
         ).save()
         user = User.query.get(1)
-        self.assertEqual(user.child_comments.count(), 1)
+        self.assertEqual(user.comments.count(), 1)
+
+    def test_a_comment_to_a_comment_to_a_comment(self):
+        c1 = Comment(
+            content="This is a test comment",
+            user_id=2,
+            text_id=1
+        )
+        c1.save()
+
+        c2 = Comment(
+            content='This is a child comment',
+            user_id=1,
+            comment_id=c1.id
+        )
+        c2.save()
+
+        c3 = Comment(
+            content='This is a child comment to a child comment',
+            user_id=2,
+            comment_id=c2.id
+        )
+        c3.save()
+
+        self.assertEqual(c1.children.count(), 1)
+        self.assertEqual(c2.children.count(), 1)
+        self.assertEqual(c3.comment_id, c2.id)
+        self.assertEqual(c2.comment_id, c1.id)

@@ -16,8 +16,7 @@ class User(db.Model):
     texts = db.relationship('Text', backref='user', lazy='dynamic')
     links = db.relationship('Link', backref='user', lazy='dynamic')
 
-    thread_comments = db.relationship('ParentComment', backref='user', lazy='dynamic')
-    child_comments = db.relationship('ChildComment', backref='user', lazy='dynamic')
+    comments = db.relationship('Comment', backref='user', lazy='dynamic')
 
     has_upvoted = db.relationship('ThreadUpvote', backref='user', lazy='dynamic')
     has_downvoted = db.relationship('ThreadDownvote', backref='user', lazy='dynamic')

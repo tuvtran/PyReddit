@@ -75,7 +75,7 @@ class Text(Thread):
     text = db.Column(db.Text, nullable=False)
     upvoters = db.relationship('ThreadUpvote', backref='text', lazy='dynamic')
     downvoters = db.relationship('ThreadDownvote', backref='text', lazy='dynamic')
-    comments = db.relationship('ParentComment', backref='text', lazy='dynamic')
+    comments = db.relationship('Comment', backref='text', lazy='dynamic')
 
     def __repr__(self):
         return f'<Text: {self.title}>'
@@ -95,7 +95,7 @@ class Link(Thread):
     link = db.Column(db.String(255), nullable=False)
     upvoters = db.relationship('ThreadUpvote', backref='link', lazy='dynamic')
     downvoters = db.relationship('ThreadDownvote', backref='link', lazy='dynamic')
-    comments = db.relationship('ParentComment', backref='link', lazy='dynamic')
+    comments = db.relationship('Comment', backref='link', lazy='dynamic')
 
     def __repr__(self):
         return f'<Link: {self.title}>'
