@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
   <title>{% block title %}PyReddit{% endblock %}</title>
 
 </head>
@@ -24,7 +25,7 @@
       </div>
     </div>
   </nav>
-  <div class="container">
+  <div class="container" id="main">
     <div class="row">
       <div class="col-sm-8">
         {% block content %}{% endblock %}
@@ -34,7 +35,7 @@
           <h3>Subreddits</h3>
           {% for subreddit in subreddit_list %}
             <ul>
-              <li><a href="#">{{ subreddit.name }}</a></li>
+              <li><a href="r/{{subreddit.name}}">{{ subreddit.name }}</a></li>
             </ul>
           {% endfor %}
         {% endif %}
