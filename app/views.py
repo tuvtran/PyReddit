@@ -21,6 +21,24 @@ def homepage():
     return render_template('index.html', **bindings)
 
 
+@views_bp.route('/r/<string:sub_name>')
+def subreddit(sub_name):
+    # get subreddit
+    sub = Subreddit.query.filter_by(name=sub_name).first()
+    links = sub.links.all()
+    texts = sub.texts.all()
+
+    threads = links + texts
+
+    bindings = {
+        'subreddit_list': Subreddit.query.all(),
+        'sub': sub,
+        'threads': sorted(threads, key=lambda x: x.modified_on)
+    }
+
+    return render_template('subreddit.html', **bindings)
+
+
 @views_bp.route('/subreddits')
 def subreddits():
     """

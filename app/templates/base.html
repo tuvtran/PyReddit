@@ -13,13 +13,15 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="#">PyReddit</a>
+      <a class="navbar-brand" href="/">PyReddit</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="#">Home</a>
+          <a class="nav-item nav-link active" href="/">
+            {% block subname %}Home{% endblock %}
+          </a>
           <a class="nav-item nav-link" href="#">Trending</a>
         </div>
       </div>
@@ -28,14 +30,36 @@
   <div class="container" id="main">
     <div class="row">
       <div class="col-sm-8">
-        {% block content %}{% endblock %}
+        {% block content %}
+          <table class="thread-list">
+          {% for thread in threads %}
+            <tr>
+              <td class="upvote-link">⇡</td>
+              <td class="score-indicator" rowspan="2">{{ thread.get_score() }}</td>
+              <td class="title">
+                <a href="
+                  {% if thread.is_link() %}
+                    {{ thread.link }}
+                  {% else %}
+                    r/{{ thread.subreddit.name }}/{{ thread.id }}
+                  {% endif %}
+                ">{{ thread.title }}</a>
+              </td>
+            </tr>
+            <tr class="thread-cell">
+              <td>⇣</td>
+              <td>by {{ thread.user.name }} | on {{ thread.modified_on }}</td>
+            </tr>
+          {% endfor %}
+          </table>
       </div>
+      {% endblock %}
       <div class="col-sm-4" id="sidebar">
         {% if subreddit_list %}
           <h3>Subreddits</h3>
-          {% for subreddit in subreddit_list %}
+          {% for s in subreddit_list %}
             <ul>
-              <li><a href="r/{{subreddit.name}}">{{ subreddit.name }}</a></li>
+              <li><a href="/r/{{s.name}}">{{ s.name }}</a></li>
             </ul>
           {% endfor %}
         {% endif %}
