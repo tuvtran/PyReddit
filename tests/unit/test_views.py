@@ -12,5 +12,5 @@ class HomePageTest(BaseUnitTest):
 class SubredditListPageTest(BaseUnitTest):
 
     def test_get_subreddit_list_200(self):
-        response = self.client.get(url_for('views.subreddits'))
+        response = self.client.get(url_for('views.subreddit', sub_name='test1'))
         self.assert200(response)
