@@ -18,4 +18,5 @@ python-editor==1.0.3
 selenium==3.7.0
 six==1.11.0
 SQLAlchemy==1.1.15
+timeago==1.0.7
 Werkzeug==0.12.2
