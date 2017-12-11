@@ -39,6 +39,20 @@ def subreddit(sub_name):
     return render_template('subreddit.html', **bindings)
 
 
+@views_bp.route('/r/<string:sub_name>/submit', methods=['POST', 'GET'])
+def subreddit_submit(sub_name):
+    # get subreddit
+    sub = Subreddit.query.filter_by(name=sub_name).first()
+
+    bindings = {
+        'sub': sub,
+        'subreddit_list': Subreddit.query.all(),
+    }
+
+    return render_template('submit.html', **bindings)
+
+
+
 @views_bp.route('/link/<int:id>')
 def link_view(id):
     # get the link by id

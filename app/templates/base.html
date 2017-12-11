@@ -64,13 +64,18 @@
         {% endblock %}
       </div>
       <div class="col-sm-4" id="sidebar">
+        {% block sidebar %}{% endblock %}
+        <br>
+        <br>
         {% if subreddit_list %}
-          <h3>Subreddits</h3>
-          {% for s in subreddit_list %}
-            <ul>
-              <li><a href="/r/{{s.name}}">{{ s.name }}</a></li>
-            </ul>
-          {% endfor %}
+          <h4>Subreddits</h4>
+          <table>
+            {% for s in subreddit_list %}
+              <tr>
+                <td><a href="/r/{{s.name}}">{{ s.name }}</a></td>
+              </tr>
+            {% endfor %}
+          </table>
         {% endif %}
       </div>
     </div>

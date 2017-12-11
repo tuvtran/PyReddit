@@ -7,3 +7,9 @@
 {% block subname %}
 {{ sub.name }}
 {% endblock %}
+
+{% block sidebar %}
+<a href="/r/{{sub.name}}/submit">
+  <button type="button" class="btn btn-primary">Submit new thread</button>
+</a>
+{% endblock %}
