@@ -13,14 +13,14 @@
 <table>
   <tbody>
     <tr>
-      <td class="upvote-link thread">⇡</td>
+      <td class="upvote-link thread" onclick="upvoteThread({{link.id}}, 'True')">⇡</td>
       <td class="score-indicator thread" rowspan="2">{{ link.get_score() }}</td>
       <td class="title thread" id="link-thread">
         <a href="{{ link.link }}">{{ link.title }}</a>
       </td>
     </tr>
     <tr class="thread-cell">
-      <td class="thread">⇣</td>
+      <td class="thread" onclick="downvoteThread({{link.id}}, 'True')">⇣</td>
       <td class="thread">by {{ link.user.name }} {{ link.get_time() }} | {{ link.comments.count() }} comments</td>
     </tr>
   </tbody>
@@ -56,7 +56,7 @@
 
       <tr>
         <td>⇣</td>
-        <td class="comment-author description">by {{ item.user.name }} </td>
+        <td class="comment-author description">by {{ item.user.name }} | <a href="/comment/{{ item.id }}/reply">reply</a> </td>
       </tr>
 
       {%- if item.children -%}

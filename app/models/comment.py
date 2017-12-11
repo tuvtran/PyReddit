@@ -54,6 +54,7 @@ class CommentUpvote(db.Model):
 
         # retrieve user to update karma
         comment = Comment.query.get(self.comment_id)
+        comment.upvote += 1
         user = User.query.get(comment.user_id)
         user.comment_karma += 1
 
@@ -72,6 +73,7 @@ class CommentDownvote(db.Model):
 
         # retrieve user to update karma
         comment = Comment.query.get(self.comment_id)
+        comment.downvote -= 1
         user = User.query.get(comment.user_id)
         user.comment_karma -= 1
 

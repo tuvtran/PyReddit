@@ -13,12 +13,12 @@
 <table>
   <tbody>
     <tr>
-      <td class="upvote-text thread">⇡</td>
+      <td class="upvote-text thread" onclick="upvoteThread({{text.id}}, 'False')">⇡</td>
       <td class="score-indicator thread" rowspan="2">{{ text.get_score() }}</td>
       <td class="title thread" id="link-text">{{ text.title }}</td>
     </tr>
     <tr class="thread-cell">
-      <td class="thread">⇣</td>
+      <td class="thread" onclick="downvoteThread({{text.id}}, 'False')">⇣</td>
       <td class="thread">by {{ text.user.name }} {{ text.get_time() }} | {{ text.comments.count() }} comments</td>
     </tr>
     <tr>

@@ -56,9 +56,11 @@ class ThreadUpvote(db.Model):
         if self.link_id:
             link = Link.query.get(self.link_id)
             _id = link.user_id
+            link.upvote += 1
         else:
             text = Text.query.get(self.text_id)
             _id = text.user_id
+            text.upvote += 1
         user = User.query.get(_id)
         user.post_karma += 1
 
@@ -80,9 +82,11 @@ class ThreadDownvote(db.Model):
         if self.link_id:
             link = Link.query.get(self.link_id)
             _id = link.user_id
+            link.downvote += 1
         else:
             text = Text.query.get(self.text_id)
             _id = text.user_id
+            text.downvote += 1
         user = User.query.get(_id)
         user.post_karma -= 1
 

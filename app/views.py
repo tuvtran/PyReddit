@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, redirect
-from flask import request
+from flask import request, jsonify
 # import database models here
 from app.models.subreddit import Subreddit
-from app.models.thread import Link, Text
+from app.models.thread import Link, Text, ThreadUpvote, ThreadDownvote
 from app.models.comment import Comment
 
 
@@ -17,7 +17,7 @@ def homepage():
 
     bindings = {
         'subreddit_list': Subreddit.query.all(),
-        'threads': sorted(threads, key=lambda x: x.modified_on)
+        'threads': sorted(threads, key=lambda x: x.get_score(), reverse=True)
     }
     return render_template('index.html', **bindings)
 
@@ -34,7 +34,7 @@ def subreddit(sub_name):
     bindings = {
         'subreddit_list': Subreddit.query.all(),
         'sub': sub,
-        'threads': sorted(threads, key=lambda x: x.modified_on)
+        'threads': sorted(threads, key=lambda x: x.get_score(), reverse=True)
     }
 
     return render_template('subreddit.html', **bindings)
@@ -156,3 +156,31 @@ def reply_comment(id):
     }
 
     return render_template('comment.html', **bindings)
+
+
+@views_bp.route('/link/<int:id>/upvote', methods=['POST'])
+def upvote_link(id):
+    data = request.json
+    ThreadUpvote(user_id=data['user_id'], link_id=id).save()
+    return jsonify({'message': 'upvoted successfully'})
+
+
+@views_bp.route('/text/<int:id>/upvote', methods=['POST'])
+def upvote_text(id):
+    data = request.json
+    ThreadUpvote(user_id=data['user_id'], text_id=id).save()
+    return jsonify({'message': 'upvoted successfully'})
+
+
+@views_bp.route('/link/<int:id>/downvote', methods=['POST'])
+def downvote_link(id):
+    data = request.json
+    ThreadDownvote(user_id=data['user_id'], link_id=id).save()
+    return jsonify({'message': 'downvoted successfully'})
+
+
+@views_bp.route('/text/<int:id>/downvote', methods=['POST'])
+def downvote_text(id):
+    data = request.json
+    ThreadDownvote(user_id=data['user_id'], text_id=id).save()
+    return jsonify({'message': 'downvoted successfully'})
