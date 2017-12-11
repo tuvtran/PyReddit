@@ -3,6 +3,7 @@ from flask import request
 # import database models here
 from app.models.subreddit import Subreddit
 from app.models.thread import Link, Text
+from app.models.comment import Comment
 
 
 views_bp = Blueprint('views', __name__)
@@ -52,14 +53,14 @@ def subreddit_submit(sub_name):
                 title=data['title'],
                 link=data['url'],
                 subreddit_id=sub.id,
-                user_id=1
+                user_id=2
             ).save()
         else:
             Text(
                 title=data['title'],
                 text=data['text'],
                 subreddit_id=sub.id,
-                user_id=1
+                user_id=2
             ).save()
 
         return redirect(f'/r/{sub.name}')
@@ -87,6 +88,19 @@ def link_view(id):
     return render_template('link.html', **bindings)
 
 
+@views_bp.route('/link/<int:id>/reply', methods=['POST'])
+def reply_link(id):
+    data = request.form
+
+    Comment(
+        content=data['content'],
+        user_id=2,
+        link_id=id
+    ).save()
+
+    return redirect(f'/link/{id}')
+
+
 @views_bp.route('/text/<int:id>')
 def text_view(id):
     # get the link by id
@@ -102,10 +116,14 @@ def text_view(id):
     return render_template('text.html', **bindings)
 
 
-@views_bp.route('/subreddits')
-def subreddits():
-    """
-    List all subreddits
-    """
-    bindings = {'subreddit_list': Subreddit.query.all()}
-    return render_template('subreddits.html', **bindings)
+@views_bp.route('/text/<int:id>/reply', methods=['POST'])
+def reply_text(id):
+    data = request.form
+
+    Comment(
+        content=data['content'],
+        user_id=2,
+        text_id=id
+    ).save()
+
+    return redirect(f'/text/{id}')

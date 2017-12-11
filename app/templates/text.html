@@ -30,6 +30,17 @@
 </table>
 
 <br>
+<form method="POST" action="/text/{{text.id}}/reply">
+  <div class="form-group">
+    <textarea class="form-control" name="content" id="reply-text"></textarea>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+
+<br>
 <br>
 
 <h4>Comment section</h4>
