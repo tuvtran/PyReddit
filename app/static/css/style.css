@@ -3,7 +3,7 @@
 }
 
 .thread-cell {
-  padding-bottom: 20px;
+  padding-bottom: 50px;
 }
 
 .thread {
@@ -11,8 +11,9 @@
 }
 
 .thread-list {
-  border-spacing: 20px;
+  border-spacing: 1em;
   border: 2px;
+  border-collapse: separate;
 }
 
 .score-indicator {
@@ -21,4 +22,16 @@
 
 #link-thread {
   font-size: 1.5em;
+}
+
+.comment-list {
+  border-collapse: separate;
+}
+
+table.comment-list > tbody > tr > td {
+  padding-right: 5px;
+}
+
+.comment-author {
+  font-size: 0.8em;
 }

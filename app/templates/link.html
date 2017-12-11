@@ -32,7 +32,7 @@
 <h3>Comment section</h3>
 <hr>
 
-<table>
+<table class="comment-list">
   <tbody>
     {%- for item in comments recursive %}
       <tr>
@@ -43,7 +43,7 @@
 
       <tr>
         <td>⇣</td>
-        <td class="comment-author">by {{ item.user.name }} </td>
+        <td class="comment-author description">by {{ item.user.name }} </td>
       </tr>
 
       {%- if item.children -%}

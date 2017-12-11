@@ -33,26 +33,32 @@
         {% block content %}
           <table class="thread-list">
             <tbody>
-            {% for thread in threads %}
-              <tr>
-                <td class="upvote-link thread">⇡</td>
-                <td class="score-indicator thread" rowspan="2">{{ thread.get_score() }}</td>
-                <td class="title thread">
-                  <a href="
-                    {% if thread.is_link() %}
-                      {{ thread.link }}
-                    {% else %}
-                      /text/{{ thread.id }}
-                    {% endif %}
-                  ">{{ thread.title }}</a> {% if not thread.is_link() %}<i>(self.{{thread.subreddit.name}})</i>{% endif %}
+              {% for thread in threads %}
+              <tr class="thread-cell">
+                <td>
+                  <table>
+                    <tr>
+                      <td class="upvote-link thread">⇡</td>
+                      <td class="score-indicator thread" rowspan="2">{{ thread.get_score() }}</td>
+                      <td class="title thread">
+                        <a href="
+                          {% if thread.is_link() %}
+                            {{ thread.link }}
+                          {% else %}
+                            /text/{{ thread.id }}
+                          {% endif %}
+                        ">{{ thread.title }}</a> {% if not thread.is_link() %}<i>(self.{{thread.subreddit.name}})</i>{% endif %}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="thread">⇣</td>
+                      <td class="thread">by {{ thread.user.name }} {{ thread.get_time() }} |
+                        <a href="/{% if thread.is_link() %}link{% else %}text{% endif %}/{{ thread.id }}">{{ thread.comments.count() }} comments</a> </td>
+                    </tr>
+                  </table>
                 </td>
               </tr>
-              <tr class="thread-cell">
-                <td class="thread">⇣</td>
-                <td class="thread">by {{ thread.user.name }} {{ thread.get_time() }} |
-                  <a href="/{% if thread.is_link() %}link{% else %}text{% endif %}/{{ thread.id }}">{{ thread.comments.count() }} comments</a> </td>
-              </tr>
-            {% endfor %}
+              {% endfor %}
             </tbody>
           </table>
         {% endblock %}
