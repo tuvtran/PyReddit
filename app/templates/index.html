@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>Hello this is the front page</h1>
+  <table>
+  {% for thread in threads %}
+    <tr>
+      <td class="upvote-link">▲</td>
+      <td class="score-indicator">{{ thread.get_score() }}</td>
+      <td class="title">{{ thread.title }}</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>by {{ thread.user.name }} | on {{ thread.modified_on }}</td>
+    </tr>
+  {% endfor %}
+  </table>
 {% endblock %}

@@ -19,11 +19,6 @@ class Thread(db.Model):
         """Foreign key to Subreddit table"""
         return db.Column(db.Integer, db.ForeignKey('subreddits.id'))
 
-    @declared_attr
-    def get_score(cls):
-        """Get score of a thread"""
-        return cls.upvote - cls.downvote
-
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     upvote = db.Column(db.Integer, nullable=False, default=0)
@@ -103,6 +98,9 @@ class Text(Thread):
     def __repr__(self):
         return f'<Text: {self.title}>'
 
+    def get_score(self):
+        return self.upvote - self.downvote
+
     @classmethod
     def is_link(self):
         return False
@@ -122,6 +120,9 @@ class Link(Thread):
 
     def __repr__(self):
         return f'<Link: {self.title}>'
+
+    def get_score(self):
+        return self.upvote - self.downvote
 
     @classmethod
     def is_link(self):

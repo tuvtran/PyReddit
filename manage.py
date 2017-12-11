@@ -4,10 +4,7 @@ import unittest
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from app import create_app, db
-
-# import database model
-from app.models.subreddit import Subreddit
-from app.models.user import User
+from utils.populate import generate_data
 
 
 app = create_app(config_name=os.environ.get('APP_SETTINGS'))
@@ -44,14 +41,8 @@ def resetdb():
 @manager.command
 def populate():
     """Populate some data"""
-
-    # creating some subreddits
-    Subreddit(name='learnprogramming', description='Learn programming').save()
-    Subreddit(name='anime', description='Place to discuss anime').save()
-    Subreddit(name='programming', description='Programming in general').save()
-
-    # create a test user
-    User(name='tester', email='tester@test.com', password='testing').save()
+    resetdb()
+    generate_data()
 
 
 @manager.command
