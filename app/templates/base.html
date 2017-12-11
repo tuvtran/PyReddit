@@ -41,14 +41,15 @@
                   {% if thread.is_link() %}
                     {{ thread.link }}
                   {% else %}
-                    r/{{ thread.subreddit.name }}/{{ thread.id }}
+                    /text/{{ thread.id }}
                   {% endif %}
                 ">{{ thread.title }}</a>
               </td>
             </tr>
             <tr class="thread-cell">
               <td>⇣</td>
-              <td>by {{ thread.user.name }} | on {{ thread.modified_on }}</td>
+              <td>by {{ thread.user.name }} | on {{ thread.modified_on }} |
+                 <a href="/{% if thread.is_link() %}link{% else %}text{% endif %}/{{ thread.id }}">{{ thread.comments.count() }} comments</a> </td>
             </tr>
           {% endfor %}
           </table>
