@@ -127,3 +127,32 @@ def reply_text(id):
     ).save()
 
     return redirect(f'/text/{id}')
+
+
+@views_bp.route('/comment/<int:id>/reply', methods=['GET', 'POST'])
+def reply_comment(id):
+    comment = Comment.query.get(id)
+    print(comment)
+
+    if request.method == 'POST':
+        data = request.form
+        Comment(
+            content=data['content'],
+            user_id=2,
+            comment_id=id
+        ).save()
+
+        while comment.parent and comment.id:
+            comment = comment.parent
+
+        if comment.link_id:
+            return redirect(f'/link/{comment.link_id}')
+        else:
+            return redirect(f'/text/{comment.text_id}')
+
+    bindings = {
+        'comment': comment,
+        'subreddit_list': Subreddit.query.all(),
+    }
+
+    return render_template('comment.html', **bindings)

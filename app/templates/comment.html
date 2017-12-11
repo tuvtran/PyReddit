@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+Comment
+{% endblock %}
+
+{% block content %}
+
+<h3>Comment reply</h3>
+<br>
+
+<form method="POST" action="/comment/{{comment.id}}/reply">
+  <div class="form-group row">
+    <label for="threadType" class="col-2 col-form-label">Title</label>
+    <div class="col-8">
+        <textarea class="form-control" name="content" placeholder="What do you think?..." id="comment-input"></textarea>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <div class="col-8 offset-2">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
+
+{% endblock %}

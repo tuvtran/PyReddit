@@ -57,7 +57,7 @@
 
       <tr>
         <td>⇣</td>
-        <td class="comment-author description">by {{ item.user.name }} </td>
+        <td class="comment-author description">by {{ item.user.name }} | <a href="/comment/{{ item.id }}/reply">reply</a> </td>
       </tr>
 
       {%- if item.children -%}
