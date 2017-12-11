@@ -27,8 +27,8 @@ class Thread(db.Model):
     downvote = db.Column(db.Integer, nullable=False, default=0)
     modified_on = db.Column(
         db.DateTime,
-        default=db.func.current_timestamp(),
-        onupdate=db.func.current_timestamp()
+        default=datetime.datetime.now(),
+        onupdate=datetime.datetime.now()
     )
 
     @abc.abstractclassmethod
