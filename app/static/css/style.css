@@ -35,3 +35,8 @@ table.comment-list > tbody > tr > td {
 .comment-author {
   font-size: 0.8em;
 }
+
+#textarea {
+  padding-top: 20px;
+  background-color: lightgrey;
+}

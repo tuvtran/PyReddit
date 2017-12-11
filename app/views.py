@@ -54,6 +54,21 @@ def link_view(id):
     return render_template('link.html', **bindings)
 
 
+@views_bp.route('/text/<int:id>')
+def text_view(id):
+    # get the link by id
+    text = Text.query.get(id)
+
+    bindings = {
+        'text': text,
+        'sub': text.subreddit,
+        'subreddit_list': Subreddit.query.all(),
+        'comments': text.comments.all(),
+    }
+
+    return render_template('text.html', **bindings)
+
+
 @views_bp.route('/subreddits')
 def subreddits():
     """
