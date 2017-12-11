@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template
-
+from flask import Blueprint, render_template, redirect
+from flask import request
 # import database models here
 from app.models.subreddit import Subreddit
 from app.models.thread import Link, Text
@@ -44,13 +44,32 @@ def subreddit_submit(sub_name):
     # get subreddit
     sub = Subreddit.query.filter_by(name=sub_name).first()
 
+    if request.method == 'POST':
+        # handle form data here
+        data = request.form
+        if data['type'] == 'linkOption':
+            Link(
+                title=data['title'],
+                link=data['url'],
+                subreddit_id=sub.id,
+                user_id=1
+            ).save()
+        else:
+            Text(
+                title=data['title'],
+                text=data['text'],
+                subreddit_id=sub.id,
+                user_id=1
+            ).save()
+
+        return redirect(f'/r/{sub.name}')
+
     bindings = {
         'sub': sub,
         'subreddit_list': Subreddit.query.all(),
     }
 
     return render_template('submit.html', **bindings)
-
 
 
 @views_bp.route('/link/<int:id>')
