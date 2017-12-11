@@ -1,4 +1,6 @@
 import abc
+import datetime
+import timeago
 from app import db
 from app.models.user import User
 from sqlalchemy.ext.declarative import declared_attr
@@ -101,6 +103,10 @@ class Text(Thread):
     def get_score(self):
         return self.upvote - self.downvote
 
+    def get_time(self):
+        now = datetime.datetime.now()
+        return timeago.format(now, self.modified_on)
+
     @classmethod
     def is_link(self):
         return False
@@ -123,6 +129,10 @@ class Link(Thread):
 
     def get_score(self):
         return self.upvote - self.downvote
+
+    def get_time(self):
+        now = datetime.datetime.now()
+        return timeago.format(now, self.modified_on)
 
     @classmethod
     def is_link(self):

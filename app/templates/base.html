@@ -32,29 +32,31 @@
       <div class="col-sm-8">
         {% block content %}
           <table class="thread-list">
-          {% for thread in threads %}
-            <tr>
-              <td class="upvote-link">⇡</td>
-              <td class="score-indicator" rowspan="2">{{ thread.get_score() }}</td>
-              <td class="title">
-                <a href="
-                  {% if thread.is_link() %}
-                    {{ thread.link }}
-                  {% else %}
-                    /text/{{ thread.id }}
-                  {% endif %}
-                ">{{ thread.title }}</a>
-              </td>
-            </tr>
-            <tr class="thread-cell">
-              <td>⇣</td>
-              <td>by {{ thread.user.name }} | on {{ thread.modified_on }} |
-                 <a href="/{% if thread.is_link() %}link{% else %}text{% endif %}/{{ thread.id }}">{{ thread.comments.count() }} comments</a> </td>
-            </tr>
-          {% endfor %}
+            <tbody>
+            {% for thread in threads %}
+              <tr>
+                <td class="upvote-link">⇡</td>
+                <td class="score-indicator" rowspan="2">{{ thread.get_score() }}</td>
+                <td class="title">
+                  <a href="
+                    {% if thread.is_link() %}
+                      {{ thread.link }}
+                    {% else %}
+                      /text/{{ thread.id }}
+                    {% endif %}
+                  ">{{ thread.title }}</a> {% if not thread.is_link() %}<i>(self.{{thread.subreddit.name}})</i>{% endif %}
+                </td>
+              </tr>
+              <tr class="thread-cell">
+                <td>⇣</td>
+                <td>by {{ thread.user.name }} {{ thread.get_time() }} |
+                  <a href="/{% if thread.is_link() %}link{% else %}text{% endif %}/{{ thread.id }}">{{ thread.comments.count() }} comments</a> </td>
+              </tr>
+            {% endfor %}
+            </tbody>
           </table>
+        {% endblock %}
       </div>
-      {% endblock %}
       <div class="col-sm-4" id="sidebar">
         {% if subreddit_list %}
           <h3>Subreddits</h3>

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ link.title }}
+{% endblock %}
+
+{% block subname %}
+{{ sub.name }}
+{% endblock %}
+
+{% block content %}
+<table>
+  <tbody>
+    <tr>
+      <td class="upvote-link">⇡</td>
+      <td class="score-indicator" rowspan="2">{{ link.get_score() }}</td>
+      <td class="title" id="link-thread">
+        <a href="{{ link.link }}">{{ link.title }}</a>
+      </td>
+    </tr>
+    <tr class="thread-cell">
+      <td>⇣</td>
+      <td>by {{ link.user.name }} {{ link.get_time() }} | {{ link.comments.count() }} comments</td>
+    </tr>
+  </tbody>
+</table>
+
+<br>
+<br>
+
+<h3>Comment section</h3>
+<hr>
+{% endblock %}
