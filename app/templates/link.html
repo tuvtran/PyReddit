@@ -6,21 +6,22 @@
 
 {% block subname %}
 {{ sub.name }}
+
 {% endblock %}
 
 {% block content %}
 <table>
   <tbody>
     <tr>
-      <td class="upvote-link">⇡</td>
-      <td class="score-indicator" rowspan="2">{{ link.get_score() }}</td>
-      <td class="title" id="link-thread">
+      <td class="upvote-link thread">⇡</td>
+      <td class="score-indicator thread" rowspan="2">{{ link.get_score() }}</td>
+      <td class="title thread" id="link-thread">
         <a href="{{ link.link }}">{{ link.title }}</a>
       </td>
     </tr>
     <tr class="thread-cell">
-      <td>⇣</td>
-      <td>by {{ link.user.name }} {{ link.get_time() }} | {{ link.comments.count() }} comments</td>
+      <td class="thread">⇣</td>
+      <td class="thread">by {{ link.user.name }} {{ link.get_time() }} | {{ link.comments.count() }} comments</td>
     </tr>
   </tbody>
 </table>
@@ -30,4 +31,31 @@
 
 <h3>Comment section</h3>
 <hr>
+
+<table>
+  <tbody>
+    {%- for item in comments recursive %}
+      <tr>
+        <td class="upvote-comment">⇡</td>
+        <td class="comment-score" rowspan="2">{{ item.get_score() }}</td>
+        <td class="comment-content">{{ item.content }}</td>
+      </tr>
+
+      <tr>
+        <td>⇣</td>
+        <td class="comment-author">by {{ item.user.name }} </td>
+      </tr>
+
+      {%- if item.children -%}
+      <tr>
+        <td></td>
+        <td></td>
+        <td><table><tbody>{{ loop(item.children) }}</tbody></table></td>
+      </tr>
+      {%- endif %}</li>
+
+    {%- endfor %}
+  </tbody>
+</table>
+
 {% endblock %}

@@ -6,7 +6,7 @@
   padding-bottom: 20px;
 }
 
-td {
+.thread {
   padding-right: 10px;
 }
 
@@ -16,7 +16,7 @@ td {
 }
 
 .score-indicator {
-  font-size: 1.25em;
+  font-size: 1.35em;
 }
 
 #link-thread {
